@@ -13,7 +13,7 @@ export async function GET() {
           appID: APP_ID,
           paths: [
             "/api/auth/reset-password-redirect*",
-            "/devocional/*",
+            "/devotional/*",
           ],
         },
       ],

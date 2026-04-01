@@ -27,7 +27,7 @@ export async function generateMetadata({
     openGraph: {
       title: ogTitle,
       description: ogDescription,
-      url: `https://cristoviviente.com/devocional/${id}`,
+      url: `https://cristoviviente.com/devotional/${id}`,
       siteName: "Iglesia Cristo Viviente",
       images: [
         {
@@ -49,7 +49,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function DevocionalPage({ params, searchParams }: Props) {
+export default async function DevotionalPage({ params, searchParams }: Props) {
   const { id } = await params;
   const { title, description } = await searchParams;
 
@@ -106,7 +106,7 @@ export default async function DevocionalPage({ params, searchParams }: Props) {
         Abrí este devocional en la app de Cristo Viviente
       </p>
       <a
-        href={`cristoviviente://devocional/${id}`}
+        href={`cristoviviente://devotional/${id}`}
         style={{
           display: "inline-flex",
           alignItems: "center",
