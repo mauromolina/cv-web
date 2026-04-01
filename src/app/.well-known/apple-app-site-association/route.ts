@@ -1,22 +1,25 @@
 import { NextResponse } from "next/server";
 
+const APPLE_TEAM_ID = process.env.APPLE_TEAM_ID || "XXXXXXXXXX";
+const BUNDLE_ID = "com.cristoviviente.app";
+const APP_ID = `${APPLE_TEAM_ID}.${BUNDLE_ID}`;
+
 export async function GET() {
   const association = {
     applinks: {
       apps: [],
       details: [
         {
-          // TODO: Reemplazar XXXXXXXXXX con tu Team ID de Apple Developer
-          appID: "XXXXXXXXXX.com.cristoviviente.app",
+          appID: APP_ID,
           paths: [
-              "/api/auth/reset-password-redirect*",
-              "/devocional/*",
-            ],
+            "/api/auth/reset-password-redirect*",
+            "/devocional/*",
+          ],
         },
       ],
     },
     webcredentials: {
-      apps: ["XXXXXXXXXX.com.cristoviviente.app"],
+      apps: [APP_ID],
     },
   };
 
