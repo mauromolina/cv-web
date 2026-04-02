@@ -14,6 +14,7 @@ export async function GET() {
           paths: [
             "/api/auth/reset-password-redirect*",
             "/devotional/*",
+            "/event/*",
           ],
         },
       ],
