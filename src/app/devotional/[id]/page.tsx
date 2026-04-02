@@ -1,25 +1,48 @@
 import type { Metadata } from "next";
 
-type Props = {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<{
-    title?: string;
-    description?: string;
-    image?: string;
-  }>;
+const API_URL = "https://api.cristoviviente.com/api";
+const SITE_URL = "https://cristoviviente.com";
+const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`;
+
+type Devotional = {
+  id: string;
+  title: string;
+  content: string;
+  coverImage: string | null;
+  bibleVerses: { reference: string; text: string }[];
 };
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: Props): Promise<Metadata> {
-  const { id } = await params;
-  const { title, description, image } = await searchParams;
+async function getDevotional(id: string): Promise<Devotional | null> {
+  try {
+    const res = await fetch(`${API_URL}/devotionals/${id}`, {
+      next: { revalidate: 60 },
+    });
 
-  const ogTitle = title || "Devocional - Cristo Viviente";
-  const ogDescription =
-    description || "Lee este devocional de Iglesia Cristo Viviente";
-  const ogImage = image || "https://cristoviviente.com/images/og-default.jpg";
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+function truncate(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trimEnd() + "...";
+}
+
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const devotional = await getDevotional(id);
+
+  const ogTitle = devotional?.title || "Devocional - Cristo Viviente";
+  const ogDescription = devotional
+    ? truncate(devotional.content.replace(/\n/g, " "), 160)
+    : "Lee este devocional de Iglesia Cristo Viviente";
+  const ogImage = devotional?.coverImage || DEFAULT_OG_IMAGE;
 
   return {
     title: ogTitle,
@@ -27,7 +50,7 @@ export async function generateMetadata({
     openGraph: {
       title: ogTitle,
       description: ogDescription,
-      url: `https://cristoviviente.com/devotional/${id}`,
+      url: `${SITE_URL}/devotional/${id}`,
       siteName: "Iglesia Cristo Viviente",
       images: [
         {
@@ -49,9 +72,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function DevotionalPage({ params, searchParams }: Props) {
+export default async function DevotionalPage({ params }: Props) {
   const { id } = await params;
-  const { title, description } = await searchParams;
+  const devotional = await getDevotional(id);
 
   return (
     <div
@@ -81,19 +104,31 @@ export default async function DevotionalPage({ params, searchParams }: Props) {
           maxWidth: 600,
         }}
       >
-        {title || "Devocional"}
+        {devotional?.title || "Devocional"}
       </h1>
-      {description && (
+      {devotional && (
         <p
           style={{
             fontSize: "1.1rem",
             color: "rgba(255,255,255,0.8)",
             maxWidth: 500,
             lineHeight: 1.7,
+            marginBottom: 12,
+          }}
+        >
+          {truncate(devotional.content.replace(/\n/g, " "), 200)}
+        </p>
+      )}
+      {devotional?.bibleVerses?.[0] && (
+        <p
+          style={{
+            fontSize: "0.95rem",
+            color: "rgba(255,255,255,0.5)",
+            fontStyle: "italic",
             marginBottom: 32,
           }}
         >
-          {description}
+          {devotional.bibleVerses[0].reference}
         </p>
       )}
       <p
