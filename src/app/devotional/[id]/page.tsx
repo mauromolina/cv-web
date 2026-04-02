@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 const API_URL = process.env.API_URL || "https://api.staging.cristoviviente.com/api";
 const SITE_URL = "https://cristoviviente.com";
+const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`;
 
 type Devotional = {
   id: string;
@@ -52,6 +53,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogDescription = devotional
     ? truncate(stripHtml(devotional.content), 160)
     : "Lee este devocional de Iglesia Cristo Viviente";
+  const ogImage =
+    devotional?.coverImage ||
+    devotional?.bulletin?.coverImage ||
+    DEFAULT_OG_IMAGE;
+
   return {
     title: ogTitle,
     description: ogDescription,
@@ -60,6 +66,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: ogDescription,
       url: `${SITE_URL}/devotional/${id}`,
       siteName: "Iglesia Cristo Viviente",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: ogTitle,
+        },
+      ],
       type: "article",
       locale: "es_AR",
     },
@@ -67,6 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: ogTitle,
       description: ogDescription,
+      images: [ogImage],
     },
   };
 }
