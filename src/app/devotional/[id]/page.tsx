@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const API_URL = "https://api.cristoviviente.com/api";
+const API_URL = process.env.API_URL || "https://api.staging.cristoviviente.com/api";
 const SITE_URL = "https://cristoviviente.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`;
 
@@ -10,6 +10,9 @@ type Devotional = {
   content: string;
   coverImage: string | null;
   bibleVerses: { reference: string; text: string }[];
+  bulletin?: {
+    coverImage: string | null;
+  };
 };
 
 async function getDevotional(id: string): Promise<Devotional | null> {
@@ -23,6 +26,14 @@ async function getDevotional(id: string): Promise<Devotional | null> {
   } catch {
     return null;
   }
+}
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function truncate(text: string, maxLength: number): string {
@@ -40,9 +51,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const ogTitle = devotional?.title || "Devocional - Cristo Viviente";
   const ogDescription = devotional
-    ? truncate(devotional.content.replace(/\n/g, " "), 160)
+    ? truncate(stripHtml(devotional.content), 160)
     : "Lee este devocional de Iglesia Cristo Viviente";
-  const ogImage = devotional?.coverImage || DEFAULT_OG_IMAGE;
+  const ogImage =
+    devotional?.coverImage ||
+    devotional?.bulletin?.coverImage ||
+    DEFAULT_OG_IMAGE;
 
   return {
     title: ogTitle,
@@ -116,7 +130,7 @@ export default async function DevotionalPage({ params }: Props) {
             marginBottom: 12,
           }}
         >
-          {truncate(devotional.content.replace(/\n/g, " "), 200)}
+          {truncate(stripHtml(devotional.content), 200)}
         </p>
       )}
       {devotional?.bibleVerses?.[0] && (
