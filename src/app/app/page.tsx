@@ -9,7 +9,7 @@ const SITE_URL = "https://cristoviviente.com";
 const APPS_PUBLISHED = true;
 
 const STORE_URLS = {
-  ios: "https://apps.apple.com/app/id6759294735",
+  ios: "https://apps.apple.com/app/id6760596425",
   // TODO: reemplazar con el package ID real de Google Play
   android:
     "https://play.google.com/store/apps/details?id=com.cristoviviente.app",
