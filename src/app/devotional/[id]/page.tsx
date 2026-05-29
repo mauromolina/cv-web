@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const API_URL = process.env.API_URL || "https://api.staging.cristoviviente.com/api";
+const API_URL = process.env.API_URL || "https://api.cristoviviente.com/api";
 const SITE_URL = "https://cristoviviente.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`;
 
