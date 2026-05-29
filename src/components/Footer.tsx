@@ -7,15 +7,13 @@ export default function Footer() {
         <div className="footer-content">
           <div className="footer-brand">
             <img
-              src="/images/cv.png"
+              src="/images/favicon.png"
               alt="Cristo Viviente"
               className="logo-img"
             />
             <span className="logo-text">Cristo Viviente</span>
           </div>
-          <p className="footer-text">
-            Una comunidad de fe en Quilmes Oeste
-          </p>
+          <p className="footer-text">Una comunidad de fe en Quilmes Oeste</p>
           <div className="footer-links">
             <a href="#inicio">Inicio</a>
             <a href="#nosotros">Nosotros</a>

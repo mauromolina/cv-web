@@ -76,7 +76,11 @@ export default async function AppPage() {
 function PublishedLanding() {
   return (
     <div style={styles.page}>
-      <img src="/images/cv.png" alt="Cristo Viviente" style={styles.logo} />
+      <img
+        src="/images/favicon.png"
+        alt="Cristo Viviente"
+        style={styles.logo}
+      />
       <h1 style={styles.title}>Iglesia Cristo Viviente</h1>
       <p style={styles.subtitle}>
         Accedé a devocionales, eventos, pedidos de oración y mucho más desde tu
@@ -113,7 +117,11 @@ function PublishedLanding() {
 function ComingSoonLanding() {
   return (
     <div style={styles.page}>
-      <img src="/images/cv.png" alt="Cristo Viviente" style={styles.logo} />
+      <img
+        src="/images/favicon.png"
+        alt="Cristo Viviente"
+        style={styles.logo}
+      />
       <h1 style={styles.title}>Iglesia Cristo Viviente</h1>
       <p style={styles.subtitle}>
         Accedé a devocionales, eventos, pedidos de oración y mucho más desde tu

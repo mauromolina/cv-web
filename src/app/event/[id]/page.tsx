@@ -134,7 +134,7 @@ export default async function EventPage({ params }: Props) {
       }}
     >
       <img
-        src="/images/cv.png"
+        src="/images/favicon.png"
         alt="Cristo Viviente"
         style={{ width: 80, height: 80, marginBottom: 24 }}
       />

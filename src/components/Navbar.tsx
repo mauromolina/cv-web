@@ -23,7 +23,11 @@ export default function Navbar() {
     <nav className={`navbar${scrolled ? " navbar-scrolled" : ""}`} id="navbar">
       <div className="nav-container">
         <a href="#" className="nav-logo">
-          <img src="/images/cv.png" alt="Cristo Viviente" className="logo-img" />
+          <img
+            src="/images/favicon.png"
+            alt="Cristo Viviente"
+            className="logo-img"
+          />
           <span className="logo-text">Cristo Viviente</span>
         </a>
         <button
