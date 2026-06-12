@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 const API_URL = process.env.API_URL || "https://api.cristoviviente.com/api";
 const SITE_URL = "https://cristoviviente.com";
-const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`;
 
 type Event = {
   id: string;
@@ -85,8 +84,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ogDescription = parts.join(" | ");
   }
 
-  const ogImage = event?.coverImage || DEFAULT_OG_IMAGE;
-
   return {
     title: ogTitle,
     description: ogDescription,
@@ -95,12 +92,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: ogDescription,
       url: `${SITE_URL}/event/${id}`,
       siteName: "Iglesia Cristo Viviente",
-      images: [
-        {
-          url: ogImage,
-          alt: ogTitle,
-        },
-      ],
       type: "article",
       locale: "es_AR",
     },
@@ -108,7 +99,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: ogTitle,
       description: ogDescription,
-      images: [ogImage],
     },
   };
 }
