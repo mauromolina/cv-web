@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Fotos originales en alta (pesadas): quedan en la compu, no se suben
+/public/landing/opt/
