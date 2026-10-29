@@ -11,8 +11,13 @@ import { APP_DEVOCIONALES, APP_HOME } from "@/components/landing/appScreens";
 import { Flecha, Instagram, Mail, Pin, Play, WhatsApp } from "@/components/landing/Iconos";
 import {
   APP_STORE, FACEBOOK, GOOGLE_PLAY, IG_IGLESIA, IG_JOVENES, MAIL, MAPS, TELEFONO,
-  ULTIMA_REUNION, WHATSAPP, YOUTUBE, YOUTUBE_VIVOS,
+  WHATSAPP, YOUTUBE, YOUTUBE_VIVOS,
 } from "@/components/landing/datos";
+import { datosCanal, ultimaReunion } from "@/components/landing/youtube";
+
+// La página se arma de nuevo como máximo una vez por hora: así la última reunión de YouTube,
+// los números del canal y el año del footer se actualizan solos, sin volver a publicar.
+export const revalidate = 3600;
 
 // Posts de @jovenes_cv: dos filas de 8, duplicadas para que el carrusel no tenga corte.
 const POSTS = Array.from({ length: 16 }, (_, i) => `/landing/jovenes/${String(i + 1).padStart(2, "0")}.jpg`);
@@ -21,7 +26,10 @@ const fila = (desde: number) => {
   return [...base, ...base];
 };
 
-export default function Home() {
+export default async function Home() {
+  const [reunion, canal] = await Promise.all([ultimaReunion(), datosCanal()]);
+  const numerosCanal = [canal.suscriptores && `${canal.suscriptores} suscriptores`, canal.videos && `${canal.videos} videos`].filter(Boolean);
+
   return (
     <div className="cvl">
       <Movimiento />
@@ -72,7 +80,7 @@ export default function Home() {
               </div>
             </div>
             <a
-              href={`https://www.youtube.com/watch?v=${ULTIMA_REUNION.id}`}
+              href={`https://www.youtube.com/watch?v=${reunion.id}`}
               target="_blank"
               rel="noopener"
               style={{ display: "flex", flexDirection: "column", gap: 20, padding: 28, borderRadius: 24, background: "rgba(255,255,255,0.06)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.10)", color: "#fff", textDecoration: "none", minWidth: 0 }}
@@ -81,18 +89,18 @@ export default function Home() {
                 <img src="/landing/yt-avatar.jpg" alt="" width={84} height={84} style={{ width: 84, height: 84, borderRadius: "50%", background: "#fff" }} />
                 <div style={{ minWidth: 0 }}>
                   <p style={{ font: "800 1.75rem/1 var(--display)", letterSpacing: "-0.035em" }}>Iglesia Cristo Viviente</p>
-                  <p style={{ marginTop: 8, color: "#A9C4C6", fontSize: "0.9375rem" }}>@cristo.viviente · 1,1 K suscriptores · 1 K videos</p>
+                  <p style={{ marginTop: 8, color: "#A9C4C6", fontSize: "0.9375rem" }}>{["@cristo.viviente", ...numerosCanal].join(" · ")}</p>
                 </div>
               </div>
               <div className="yt-video">
                 <div className="yt-thumb" style={{ borderRadius: 16 }}>
-                  <Image src={ULTIMA_REUNION.thumb} alt="" width={960} height={540} sizes="(min-width: 900px) 560px, 100vw" />
+                  <Image src={reunion.thumb} alt="" width={960} height={540} sizes="(min-width: 900px) 560px, 100vw" />
                   <span className="yt-play">
                     <Play />
                   </span>
                 </div>
                 <div>
-                  <p className="yt-video__tit">{ULTIMA_REUNION.titulo}</p>
+                  <p className="yt-video__tit">{reunion.titulo}</p>
                   <p className="yt-video__meta">La última reunión</p>
                 </div>
               </div>

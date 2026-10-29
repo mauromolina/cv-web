@@ -17,7 +17,7 @@ export const FACEBOOK = "https://www.facebook.com/igle.cristo.viviente";
 export const APP_STORE = "https://apps.apple.com/app/id6760596425";
 export const GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=com.cristoviviente.app";
 
-// La última reunión publicada en el canal. Se actualiza a mano.
+// Respaldo: se muestra solo si no se puede leer YouTube (ver youtube.ts). No hace falta tocarlo.
 export const ULTIMA_REUNION = {
   id: "Qbv3BxE49ic",
   titulo: "Reunión de Domingo Tarde | 25/10",
