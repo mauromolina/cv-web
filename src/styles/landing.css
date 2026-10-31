@@ -713,6 +713,7 @@ html:has(.cvl) { scroll-behavior: smooth; scroll-padding-top: 84px; }
    y se funde con el petróleo; el texto queda sobre el fondo liso. */
 @container pagina (max-width: 599px) {
   .v2-hero { height: clamp(560px, 78svh, 680px); background: rgb(2, 20, 23); }
+  .v2-hero > img { object-position: 45% 50%; }
   /* Mismo tono casi negro que el velo de la versión web; la foto se sigue viendo detrás del texto */
   .v2-hero__velo { background:
     linear-gradient(to bottom, rgba(2, 20, 23, 0.4) 0, rgba(2, 20, 23, 0) 110px),
@@ -770,5 +771,6 @@ html:has(.cvl) { scroll-behavior: smooth; scroll-padding-top: 84px; }
   .v2-nav__hamburguesa span { transition: none; }
 }
 
-/* ================= Foto del hero (centrada en web y celular) ================= */
-.v2-hero .v2-hero__foto { object-fit: cover; object-position: 50% 50%; }
+/* ================= Video del hero ================= */
+.v2-hero .v2-hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+@container pagina (max-width: 599px) { .v2-hero .v2-hero__video { object-position: 50% 50%; } }

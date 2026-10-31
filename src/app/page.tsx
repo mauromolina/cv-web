@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "@/styles/landing.css";
 import Nav from "@/components/landing/Nav";
+import HeroVideo from "@/components/landing/HeroVideo";
 import Horarios from "@/components/landing/Horarios";
 import Movimiento from "@/components/landing/Movimiento";
 import LogoCV from "@/components/landing/LogoCV";
@@ -34,16 +35,9 @@ export default async function Home() {
       <Movimiento />
       <Nav />
 
-      {/* Hero: el nombre de la iglesia sobre una foto de la iglesia */}
+      {/* Hero: el nombre de la iglesia sobre el video de la iglesia */}
       <header id="inicio" className="v2-hero sobre-foto">
-        <Image
-          src="/landing/hero-5.jpg"
-          alt="La iglesia Cristo Viviente durante una reunión"
-          fill
-          priority
-          sizes="100vw"
-          className="v2-hero__foto"
-        />
+        <HeroVideo />
         <div className="v2-hero__velo"></div>
         <div className="v2-hero__cont">
           <h1>
