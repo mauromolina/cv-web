@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Inter para el texto e Inter Display para los titulares (Design System Cristo Viviente).
@@ -75,7 +76,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} ${interDisplay.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Vercel Web Analytics: cuenta visitas sin cookies. Los datos se ven en el panel de Vercel, pestaña Analytics. */}
+        <Analytics />
+      </body>
     </html>
   );
 }
